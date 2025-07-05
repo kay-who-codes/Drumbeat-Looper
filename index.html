@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rhythm Machine</title>
+    <title>🥁 Drumbeat Looper</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
         
@@ -357,8 +357,8 @@
     <div class="drum-machine">
         <div class="header">
             <div class="header-titles">
-                <div class="logo">RHYTHM MACHINE</div>
-                <div class="subtitle">DRUM SEQUENCER • MODEL 002</div>
+                <div class="logo">Drumbeat Looper</div>
+                <div class="subtitle">DRUM SEQUENCER • MODEL 003</div>
             </div>
             <div class="status-indicator" id="statusIndicator"></div>
         </div>
@@ -412,6 +412,13 @@
         </div>
 
         <div class="presets">
+            <button class="btn preset-btn" data-preset="empty">Empty</button>
+            <button class="btn preset-btn" data-preset="hiphop">Hip-Hop</button>
+            <button class="btn preset-btn" data-preset="swinghop">Swing-Hop</button>
+            <button class="btn preset-btn" data-preset="industryhop">Industry-Hop</button>
+            <button class="btn preset-btn" data-preset="breakbeat">Breakbeat</button>
+            <button class="btn preset-btn" data-preset="doublekick">Double Kick</button>
+            <button class="btn preset-btn" data-preset="heartbeat">Heartbeat</button>
             <button class="btn preset-btn" data-preset="techno">Techno</button>
             <button class="btn preset-btn" data-preset="house">House</button>
             <button class="btn preset-btn" data-preset="trap">Trap</button>
@@ -422,15 +429,12 @@
             <button class="btn preset-btn" data-preset="dubstep">Dubstep</button>
             <button class="btn preset-btn" data-preset="funk">Funk</button>
             <button class="btn preset-btn" data-preset="jungle">Jungle</button>
-            <button class="btn preset-btn" data-preset="latin">Latin</button>
             <button class="btn preset-btn" data-preset="reggae">Reggae</button>
             <button class="btn preset-btn" data-preset="ambient">Ambient</button>
             <button class="btn preset-btn" data-preset="industrial">Industrial</button>
             <button class="btn preset-btn" data-preset="shuffle">Shuffle</button>
-            <button class="btn preset-btn" data-preset="afrobeat">Afrobeat</button>
             <button class="btn preset-btn" data-preset="garage">Garage</button>
             <button class="btn preset-btn" data-preset="experimental">Experimental</button>
-            <button class="btn preset-btn" data-preset="breakbeat">Breakbeat</button>
             <button class="btn preset-btn" data-preset="minimal">Minimal</button>
         </div>
     </div>
@@ -444,41 +448,55 @@
 
         // Preset patterns
         const presets = {
-    empty: {
-        kick:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        snare:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        hihat:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-    },
-    swinghop: {
-        kick:    [1,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0],
-        snare:   [0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],
-        hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1],
-        openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-        clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0]
-    },
-    industryhop: {
-        kick:    [1,0,1,0,1,0,0,1,0,0,1,0,0,0,1,0],
-        snare:   [0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0],
-        hihat:   [1,0,0,0,1,0,0,1,1,0,1,0,0,1,0,0],
-        openhat: [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
-        clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0]
-    },
-    doublekick: {
-        kick:    [1,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0],
-        snare:   [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0],
-        hihat:   [1,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0],
-        openhat: [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
-        clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-    },
-    heartbeat: {
-        kick:    [1,0,0,1,0,0,0,0,1,0,0,1,0,0,0,0],
-        snare:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-        hihat:   [1,1,0,0,1,0,0,0,1,0,0,0,1,1,0,0],
-        openhat: [0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
-        clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0]
-    },
+            empty: {
+                kick:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                snare:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                hihat:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            },
+            hiphop: {
+                kick:    [1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0],
+                snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+                hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+                openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0]
+            },
+            swinghop: {
+                kick:    [1,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0],
+                snare:   [0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],
+                hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1],
+                openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+                clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0]
+            },
+            industryhop: {
+                kick:    [1,0,1,0,1,0,0,1,0,0,1,0,0,0,1,0],
+                snare:   [0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0],
+                hihat:   [1,0,0,0,1,0,0,1,1,0,1,0,0,1,0,0],
+                openhat: [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
+                clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0]
+            },
+            breakbeat: {
+                kick:    [1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0],
+                snare:   [0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0],
+                hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+                openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+                clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            },
+            doublekick: {
+                kick:    [1,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0],
+                snare:   [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0],
+                hihat:   [1,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0],
+                openhat: [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+                clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            },
+            heartbeat: {
+                kick:    [1,0,0,1,0,0,0,0,1,0,0,1,0,0,0,0],
+                snare:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+                hihat:   [1,1,0,0,1,0,0,0,1,0,0,0,1,1,0,0],
+                openhat: [0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
+                clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0]
+            },
             techno: {
                 kick:    [1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0],
                 snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
@@ -498,13 +516,6 @@
                 snare:   [0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,1],
                 hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
                 openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0]
-            },
-            hiphop: {
-                kick:    [1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0],
-                snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
-                hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
-                openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
                 clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0]
             },
             drum_and_bass: {
@@ -528,13 +539,6 @@
                 openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
                 clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0]
             },
-            breakbeat: {
-                kick:    [1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0],
-                snare:   [0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0],
-                hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
-                openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-                clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-            },
             minimal: {
                 kick:    [1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
                 snare:   [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
@@ -548,7 +552,7 @@
                 hihat:   [0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0],
                 openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                 clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0]
-        },
+            },
             funk: {
                 kick:    [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0],
                 snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
