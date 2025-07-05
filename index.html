@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🥁 Drumbeat Looper</title>
+    <title>🥁Drumbeat Looper</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
         
@@ -398,6 +398,9 @@
                 <div class="track-label">Kick</div>
             </div>
             <div class="track">
+                <div class="track-label">808</div>
+            </div>
+            <div class="track">
                 <div class="track-label">Snare</div>
             </div>
             <div class="track">
@@ -408,6 +411,21 @@
             </div>
             <div class="track">
                 <div class="track-label">Clap</div>
+            </div>
+            <div class="track">
+                <div class="track-label">Tom</div>
+            </div>
+            <div class="track">
+                <div class="track-label">Crash</div>
+            </div>
+            <div class="track">
+                <div class="track-label">Ride</div>
+            </div>
+            <div class="track">
+                <div class="track-label">Perc</div>
+            </div>
+            <div class="track">
+                <div class="track-label">Cowbell</div>
             </div>
         </div>
 
@@ -444,170 +462,308 @@
     <script>
         // Configuration
         const STEPS = 16;
-        const instruments = ['kick', 'snare', 'hihat', 'openhat', 'clap'];
+        const instruments = ['kick', '808', 'snare', 'hihat', 'openhat', 'clap', 'tom', 'crash', 'ride', 'perc', 'cowbell'];
 
         // Preset patterns
         const presets = {
-            empty: {
-                kick:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                snare:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                hihat:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        empty: {
+            kick:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            808:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            snare:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            hihat:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             },
-            hiphop: {
-                kick:    [1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0],
-                snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
-                hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
-                openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0]
+        hiphop: {
+            kick:    [1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0],
+            808:     [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+            openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             },
-            swinghop: {
-                kick:    [1,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0],
-                snare:   [0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],
-                hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1],
-                openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-                clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0]
+        swinghop: {
+            kick:    [1,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0],
+            808:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+            snare:   [0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],
+            hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1],
+            openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+            clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             },
-            industryhop: {
-                kick:    [1,0,1,0,1,0,0,1,0,0,1,0,0,0,1,0],
-                snare:   [0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0],
-                hihat:   [1,0,0,0,1,0,0,1,1,0,1,0,0,1,0,0],
-                openhat: [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
-                clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0]
+        industryhop: {
+            kick:    [1,0,1,0,1,0,0,1,0,0,1,0,0,0,1,0],
+            808:     [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            snare:   [0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0],
+            hihat:   [1,0,0,0,1,0,0,1,1,0,1,0,0,1,0,0],
+            openhat: [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
+            clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             },
-            breakbeat: {
-                kick:    [1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0],
-                snare:   [0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0],
-                hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
-                openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-                clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        breakbeat: {
+            kick:    [1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0],
+            808:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            snare:   [0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0],
+            hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+            openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+            clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             },
-            doublekick: {
-                kick:    [1,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0],
-                snare:   [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0],
-                hihat:   [1,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0],
-                openhat: [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
-                clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        doublekick: {
+            kick:    [1,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0],
+            808:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            snare:   [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0],
+            hihat:   [1,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0],
+            openhat: [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             },
-            heartbeat: {
-                kick:    [1,0,0,1,0,0,0,0,1,0,0,1,0,0,0,0],
-                snare:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-                hihat:   [1,1,0,0,1,0,0,0,1,0,0,0,1,1,0,0],
-                openhat: [0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
-                clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0]
+        heartbeat: {
+            kick:    [1,0,0,1,0,0,0,0,1,0,0,1,0,0,0,0],
+            808:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            snare:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+            hihat:   [1,1,0,0,1,0,0,0,1,0,0,0,1,1,0,0],
+            openhat: [0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
+            clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             },
-            techno: {
-                kick:    [1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0],
-                snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
-                hihat:   [0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0],
-                openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0]
+        techno: {
+            kick:    [1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0],
+            808:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            hihat:   [0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0],
+            openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             },
-            house: {
-                kick:    [1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0],
-                snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
-                hihat:   [0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0],
-                openhat: [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
-                clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0]
+        house: {
+            kick:    [1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0],
+            808:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            hihat:   [0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0],
+            openhat: [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+            clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             },
-            trap: {
-                kick:    [1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0],
-                snare:   [0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,1],
-                hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
-                openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0]
+        trap: {
+            kick:    [1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0],
+            808:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            snare:   [0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,1],
+            hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+            openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             },
-            drum_and_bass: {
-                kick:    [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
-                snare:   [0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0],
-                hihat:   [0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0],
-                openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        drum_and_bass: {
+            kick:    [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
+            808:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            snare:   [0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0],
+            hihat:   [0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0],
+            openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             },
-            rock: {
-                kick:    [1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0],
-                snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
-                hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
-                openhat: [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0],
-                clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        rock: {
+            kick:    [1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0],
+            808:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+            openhat: [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0],
+            clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             },
-            disco: {
-                kick:    [1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0],
-                snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
-                hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
-                openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0]
+        disco: {
+            kick:    [1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0],
+            808:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+            openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             },
-            minimal: {
-                kick:    [1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
-                snare:   [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
-                hihat:   [0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1],
-                openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                clap:    [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0]
+        minimal: {
+            kick:    [1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
+            808:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            snare:   [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
+            hihat:   [0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1],
+            openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            clap:    [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             },
-            dubstep: {
-                kick:    [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
-                snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
-                hihat:   [0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0],
-                openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0]
+        dubstep: {
+            kick:    [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
+            808:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            hihat:   [0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0],
+            openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             },
-            funk: {
-                kick:    [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0],
-                snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
-                hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
-                openhat: [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
-                clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        funk: {
+            kick:    [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0],
+            808:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+            openhat: [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+            clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             },
-            jungle: {
-                kick:    [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0],
-                snare:   [0,0,1,0,0,0,0,1,0,0,1,0,0,0,0,0],
-                hihat:   [0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0],
-                openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+         jungle: {
+            kick:    [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0],
+            808:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            snare:   [0,0,1,0,0,0,0,1,0,0,1,0,0,0,0,0],
+            hihat:   [0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0],
+            openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             },
-            reggae: {
-                kick:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
-                snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
-                hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
-                openhat: [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
-                clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        reggae: {
+            kick:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            808:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+            openhat: [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+            clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             },
-            ambient: {
-                kick:    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                snare:   [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
-                hihat:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
-                openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        ambient: {
+            kick:    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            808:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            snare:   [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
+            hihat:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             },
-            industrial: {
-                kick:    [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
-                snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
-                hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
-                openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0]
+        industrial: {
+            kick:    [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+            808:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            hihat:   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+            openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             },
-            shuffle: {
-                kick:    [1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0],
-                snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
-                hihat:   [1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0],
-                openhat: [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
-                clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        shuffle: {
+            kick:    [1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0],
+            808:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            hihat:   [1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0],
+            openhat: [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+            clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             },
-            garage: {
-                kick:    [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0],
-                snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
-                hihat:   [0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0],
-                openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0]
+        garage: {
+            kick:    [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0],
+            808:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            snare:   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            hihat:   [0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0],
+            openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            clap:    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             },
-            experimental: {
-                kick:    [1,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0],
-                snare:   [0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0],
-                hihat:   [0,0,1,0,0,0,0,1,0,0,1,0,0,0,0,0],
-                openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0]
+        experimental: {
+            kick:    [1,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0],
+            808:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            snare:   [0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0],
+            hihat:   [0,0,1,0,0,0,0,1,0,0,1,0,0,0,0,0],
+            openhat: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            clap:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+            tom:     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            crash:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            ride:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            perc:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            cowbell: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             }
         };
 
@@ -674,137 +830,315 @@ function playSound(inst) {
     gain.connect(audioContext.destination);
     
     switch(inst) {
-        case 'kick':
-            osc.frequency.setValueAtTime(140, now);
-            osc.frequency.exponentialRampToValueAtTime(0.01, now + 0.5);
-            gain.gain.setValueAtTime(1, now);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
-            osc.start(now);
-            osc.stop(now + 0.5);
-            break;
-            
-        case 'snare':
-            const noise = audioContext.createBufferSource();
-            const noiseBuffer = audioContext.createBuffer(1, audioContext.sampleRate * 0.2, audioContext.sampleRate);
-            const noiseData = noiseBuffer.getChannelData(0);
-            for (let i = 0; i < noiseBuffer.length; i++) {
-                noiseData[i] = Math.random() * 2 - 1;
+    case 'kick':
+        osc.frequency.setValueAtTime(140, now);
+        osc.frequency.exponentialRampToValueAtTime(0.01, now + 0.5);
+        gain.gain.setValueAtTime(1, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+        osc.start(now);
+        osc.stop(now + 0.5);
+        break;
+        
+    case '808':
+        // Hard-hitting 808 bass drum with punchy transient and longer sub tail
+        const bassOsc = audioContext.createOscillator();
+        const bassGain = audioContext.createGain();
+        const bassFilter = audioContext.createBiquadFilter();
+
+        bassOsc.type = 'sine';
+        bassFilter.type = 'lowpass';
+        bassFilter.frequency.value = 80;
+        bassFilter.Q.value = 2.5;
+
+        bassOsc.connect(bassFilter);
+        bassFilter.connect(bassGain);
+        bassGain.connect(audioContext.destination);
+
+        // Add a sharp pitch envelope for punch
+        bassOsc.frequency.setValueAtTime(180, now);
+        bassOsc.frequency.exponentialRampToValueAtTime(60, now + 0.04);
+        // Extended sub tail pitch envelope for longer decay
+        bassOsc.frequency.exponentialRampToValueAtTime(30, now + 2.9); // was 0.6
+
+        // Gain envelope: fast attack, punchy decay, longer sub tail 
+        bassGain.gain.setValueAtTime(1.1, now); 
+        bassGain.gain.exponentialRampToValueAtTime(0.7, now + 0.04);
+        bassGain.gain.exponentialRampToValueAtTime(0.3, now + 0.18);
+        // Extended sub tail gain envelope for longer decay
+        bassGain.gain.exponentialRampToValueAtTime(0.001, now + 1.4); // was 1.1
+
+        bassOsc.start(now);
+        bassOsc.stop(now + 1.5); // was 1.2
+        break;
+        
+    case 'snare':
+        const noise = audioContext.createBufferSource();
+        const noiseBuffer = audioContext.createBuffer(1, audioContext.sampleRate * 0.2, audioContext.sampleRate);
+        const noiseData = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < noiseBuffer.length; i++) {
+            noiseData[i] = Math.random() * 2 - 1;
+        }
+        noise.buffer = noiseBuffer;
+        
+        const noiseGain = audioContext.createGain();
+        noise.connect(noiseGain);
+        noiseGain.connect(audioContext.destination);
+        noiseGain.gain.setValueAtTime(0.2, now);
+        noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+        
+        osc.frequency.setValueAtTime(200, now);
+        osc.frequency.exponentialRampToValueAtTime(100, now + 0.1);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+        
+        osc.start(now);
+        osc.stop(now + 0.2);
+        noise.start(now);
+        noise.stop(now + 0.2);
+        break;
+        
+    case 'hihat':
+        // Short, crisp hihat using filtered noise
+        const hihatNoise = audioContext.createBufferSource();
+        const hihatBuffer = audioContext.createBuffer(1, audioContext.sampleRate * 0.08, audioContext.sampleRate);
+        const hihatData = hihatBuffer.getChannelData(0);
+        for (let i = 0; i < hihatBuffer.length; i++) {
+            hihatData[i] = Math.random() * 2 - 1;
+        }
+        hihatNoise.buffer = hihatBuffer;
+        
+        // High-pass filter to make it sound more metallic
+        const hihatFilter = audioContext.createBiquadFilter();
+        hihatFilter.type = 'highpass';
+        hihatFilter.frequency.value = 8000;
+        hihatFilter.Q.value = 1;
+        
+        const hihatGain = audioContext.createGain();
+        hihatNoise.connect(hihatFilter);
+        hihatFilter.connect(hihatGain);
+        hihatGain.connect(audioContext.destination);
+        
+        hihatGain.gain.setValueAtTime(0.15, now);
+        hihatGain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+        
+        hihatNoise.start(now);
+        hihatNoise.stop(now + 0.08);
+        break;
+        
+    case 'openhat':
+        // Longer, more sustained open hihat
+        const openhatNoise = audioContext.createBufferSource();
+        const openhatBuffer = audioContext.createBuffer(1, audioContext.sampleRate * 0.4, audioContext.sampleRate);
+        const openhatData = openhatBuffer.getChannelData(0);
+        for (let i = 0; i < openhatBuffer.length; i++) {
+            openhatData[i] = Math.random() * 2 - 1;
+        }
+        openhatNoise.buffer = openhatBuffer;
+        
+        // High-pass filter for metallic sound
+        const openhatFilter = audioContext.createBiquadFilter();
+        openhatFilter.type = 'highpass';
+        openhatFilter.frequency.value = 7000;
+        openhatFilter.Q.value = 1;
+        
+        const openhatGain = audioContext.createGain();
+        openhatNoise.connect(openhatFilter);
+        openhatFilter.connect(openhatGain);
+        openhatGain.connect(audioContext.destination);
+        
+        openhatGain.gain.setValueAtTime(0.12, now);
+        openhatGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+        
+        openhatNoise.start(now);
+        openhatNoise.stop(now + 0.4);
+        break;
+        
+    case 'clap':
+        // Multiple burst clap sound
+        for (let burst = 0; burst < 3; burst++) {
+            const clapNoise = audioContext.createBufferSource();
+            const clapBuffer = audioContext.createBuffer(1, audioContext.sampleRate * 0.15, audioContext.sampleRate);
+            const clapData = clapBuffer.getChannelData(0);
+            for (let i = 0; i < clapBuffer.length; i++) {
+                clapData[i] = Math.random() * 2 - 1;
             }
-            noise.buffer = noiseBuffer;
+            clapNoise.buffer = clapBuffer;
             
-            const noiseGain = audioContext.createGain();
-            noise.connect(noiseGain);
-            noiseGain.connect(audioContext.destination);
-            noiseGain.gain.setValueAtTime(0.2, now);
-            noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+            // Band-pass filter for more realistic clap sound
+            const clapFilter = audioContext.createBiquadFilter();
+            clapFilter.type = 'bandpass';
+            clapFilter.frequency.value = 2000;
+            clapFilter.Q.value = 0.5;
             
-            osc.frequency.setValueAtTime(200, now);
-            osc.frequency.exponentialRampToValueAtTime(100, now + 0.1);
-            gain.gain.setValueAtTime(0.3, now);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+            const clapGain = audioContext.createGain();
+            clapNoise.connect(clapFilter);
+            clapFilter.connect(clapGain);
+            clapGain.connect(audioContext.destination);
             
-            osc.start(now);
-            osc.stop(now + 0.2);
-            noise.start(now);
-            noise.stop(now + 0.2);
-            break;
+            const burstTime = now + (burst * 0.01);
+            const burstGain = 0.4 - (burst * 0.1); // Slightly diminishing volume
             
-        case 'hihat':
-            // Short, crisp hihat using filtered noise
-            const hihatNoise = audioContext.createBufferSource();
-            const hihatBuffer = audioContext.createBuffer(1, audioContext.sampleRate * 0.08, audioContext.sampleRate);
-            const hihatData = hihatBuffer.getChannelData(0);
-            for (let i = 0; i < hihatBuffer.length; i++) {
-                hihatData[i] = Math.random() * 2 - 1;
-            }
-            hihatNoise.buffer = hihatBuffer;
+            clapGain.gain.setValueAtTime(burstGain, burstTime);
+            clapGain.gain.exponentialRampToValueAtTime(0.001, burstTime + 0.15);
             
-            // High-pass filter to make it sound more metallic
-            const hihatFilter = audioContext.createBiquadFilter();
-            hihatFilter.type = 'highpass';
-            hihatFilter.frequency.value = 8000;
-            hihatFilter.Q.value = 1;
-            
-            const hihatGain = audioContext.createGain();
-            hihatNoise.connect(hihatFilter);
-            hihatFilter.connect(hihatGain);
-            hihatGain.connect(audioContext.destination);
-            
-            hihatGain.gain.setValueAtTime(0.15, now);
-            hihatGain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
-            
-            hihatNoise.start(now);
-            hihatNoise.stop(now + 0.08);
-            break;
-            
-        case 'openhat':
-            // Longer, more sustained open hihat
-            const openhatNoise = audioContext.createBufferSource();
-            const openhatBuffer = audioContext.createBuffer(1, audioContext.sampleRate * 0.4, audioContext.sampleRate);
-            const openhatData = openhatBuffer.getChannelData(0);
-            for (let i = 0; i < openhatBuffer.length; i++) {
-                openhatData[i] = Math.random() * 2 - 1;
-            }
-            openhatNoise.buffer = openhatBuffer;
-            
-            // High-pass filter for metallic sound
-            const openhatFilter = audioContext.createBiquadFilter();
-            openhatFilter.type = 'highpass';
-            openhatFilter.frequency.value = 7000;
-            openhatFilter.Q.value = 1;
-            
-            const openhatGain = audioContext.createGain();
-            openhatNoise.connect(openhatFilter);
-            openhatFilter.connect(openhatGain);
-            openhatGain.connect(audioContext.destination);
-            
-            openhatGain.gain.setValueAtTime(0.12, now);
-            openhatGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
-            
-            openhatNoise.start(now);
-            openhatNoise.stop(now + 0.4);
-            break;
-            
-        case 'clap':
-            // Multiple burst clap sound
-            for (let burst = 0; burst < 3; burst++) {
-                const clapNoise = audioContext.createBufferSource();
-                const clapBuffer = audioContext.createBuffer(1, audioContext.sampleRate * 0.15, audioContext.sampleRate);
-                const clapData = clapBuffer.getChannelData(0);
-                for (let i = 0; i < clapBuffer.length; i++) {
-                    clapData[i] = Math.random() * 2 - 1;
-                }
-                clapNoise.buffer = clapBuffer;
-                
-                // Band-pass filter for more realistic clap sound
-                const clapFilter = audioContext.createBiquadFilter();
-                clapFilter.type = 'bandpass';
-                clapFilter.frequency.value = 2000;
-                clapFilter.Q.value = 0.5;
-                
-                const clapGain = audioContext.createGain();
-                clapNoise.connect(clapFilter);
-                clapFilter.connect(clapGain);
-                clapGain.connect(audioContext.destination);
-                
-                const burstTime = now + (burst * 0.01);
-                const burstGain = 0.4 - (burst * 0.1); // Slightly diminishing volume
-                
-                clapGain.gain.setValueAtTime(burstGain, burstTime);
-                clapGain.gain.exponentialRampToValueAtTime(0.001, burstTime + 0.15);
-                
-                clapNoise.start(burstTime);
-                clapNoise.stop(burstTime + 0.15);
-            }
-            break;
+            clapNoise.start(burstTime);
+            clapNoise.stop(burstTime + 0.15);
+        }
+        break;
+        
+    case 'tom':
+        // Higher pitch tom drum with pitch sweep
+        const tomOsc = audioContext.createOscillator();
+        const tomGain = audioContext.createGain();
+        const tomFilter = audioContext.createBiquadFilter();
+        
+        tomOsc.type = 'sine';
+        tomFilter.type = 'lowpass';
+        tomFilter.frequency.value = 500;
+        tomFilter.Q.value = 2;
+        
+        tomOsc.connect(tomFilter);
+        tomFilter.connect(tomGain);
+        tomGain.connect(audioContext.destination);
+        
+        tomOsc.frequency.setValueAtTime(220, now);
+        tomOsc.frequency.exponentialRampToValueAtTime(110, now + 0.25);
+        
+        tomGain.gain.setValueAtTime(0.6, now);
+        tomGain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        
+        tomOsc.start(now);
+        tomOsc.stop(now + 0.25);
+        break;
+        
+    case 'crash':
+        // Crash cymbal with metallic shimmer
+        const crashNoise = audioContext.createBufferSource();
+        const crashBuffer = audioContext.createBuffer(1, audioContext.sampleRate * 2, audioContext.sampleRate);
+        const crashData = crashBuffer.getChannelData(0);
+        for (let i = 0; i < crashBuffer.length; i++) {
+            crashData[i] = Math.random() * 2 - 1;
+        }
+        crashNoise.buffer = crashBuffer;
+        
+        const crashFilter = audioContext.createBiquadFilter();
+        crashFilter.type = 'highpass';
+        crashFilter.frequency.value = 6000;
+        crashFilter.Q.value = 0.7;
+        
+        const crashGain = audioContext.createGain();
+        crashNoise.connect(crashFilter);
+        crashFilter.connect(crashGain);
+        crashGain.connect(audioContext.destination);
+        
+        crashGain.gain.setValueAtTime(0.5, now);
+        crashGain.gain.exponentialRampToValueAtTime(0.001, now + 2);
+        
+        crashNoise.start(now);
+        crashNoise.stop(now + 2);
+        break;
+        
+    case 'ride':
+        // Ride cymbal with bell-like attack
+        const rideNoise = audioContext.createBufferSource();
+        const rideBuffer = audioContext.createBuffer(1, audioContext.sampleRate * 0.6, audioContext.sampleRate);
+        const rideData = rideBuffer.getChannelData(0);
+        for (let i = 0; i < rideBuffer.length; i++) {
+            rideData[i] = Math.random() * 2 - 1;
+        }
+        rideNoise.buffer = rideBuffer;
+        
+        const rideBell = audioContext.createOscillator();
+        rideBell.type = 'sine';
+        rideBell.frequency.value = 2000;
+        
+        const rideBellGain = audioContext.createGain();
+        rideBell.connect(rideBellGain);
+        rideBellGain.connect(audioContext.destination);
+        
+        const rideFilter = audioContext.createBiquadFilter();
+        rideFilter.type = 'highpass';
+        rideFilter.frequency.value = 4000;
+        rideFilter.Q.value = 0.5;
+        
+        const rideGain = audioContext.createGain();
+        rideNoise.connect(rideFilter);
+        rideFilter.connect(rideGain);
+        rideGain.connect(audioContext.destination);
+        
+        // Bell attack
+        rideBellGain.gain.setValueAtTime(0.2, now);
+        rideBellGain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+        
+        // Ride sustain
+        rideGain.gain.setValueAtTime(0.15, now);
+        rideGain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+        
+        rideBell.start(now);
+        rideBell.stop(now + 0.1);
+        rideNoise.start(now);
+        rideNoise.stop(now + 0.6);
+        break;
+        
+    case 'perc':
+        // Percussive shaker/tambourine hybrid
+        const percNoise = audioContext.createBufferSource();
+        const percBuffer = audioContext.createBuffer(1, audioContext.sampleRate * 0.12, audioContext.sampleRate);
+        const percData = percBuffer.getChannelData(0);
+        for (let i = 0; i < percBuffer.length; i++) {
+            percData[i] = Math.random() * 2 - 1;
+        }
+        percNoise.buffer = percBuffer;
+        
+        const percFilter = audioContext.createBiquadFilter();
+        percFilter.type = 'bandpass';
+        percFilter.frequency.value = 5000;
+        percFilter.Q.value = 3;
+        
+        const percGain = audioContext.createGain();
+        percNoise.connect(percFilter);
+        percFilter.connect(percGain);
+        percGain.connect(audioContext.destination);
+        
+        percGain.gain.setValueAtTime(0.25, now);
+        percGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+        
+        percNoise.start(now);
+        percNoise.stop(now + 0.12);
+        break;
+        
+    case 'cowbell':
+        // Classic cowbell sound
+        const cowbellOsc1 = audioContext.createOscillator();
+        const cowbellOsc2 = audioContext.createOscillator();
+        const cowbellGain = audioContext.createGain();
+        
+        cowbellOsc1.type = 'square';
+        cowbellOsc2.type = 'square';
+        cowbellOsc1.frequency.value = 800;
+        cowbellOsc2.frequency.value = 540;
+        
+        cowbellOsc1.connect(cowbellGain);
+        cowbellOsc2.connect(cowbellGain);
+        cowbellGain.connect(audioContext.destination);
+        
+        cowbellGain.gain.setValueAtTime(0.3, now);
+        cowbellGain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        
+        cowbellOsc1.start(now);
+        cowbellOsc2.start(now);
+        cowbellOsc1.stop(now + 0.25);
+        cowbellOsc2.stop(now + 0.25);
+        break;
     }
 }
-        // Sequencer playback
-        function advanceSequencer() {
-            // Remove playing class from previous step
-            document.querySelectorAll('.step').forEach(el => {
-                el.classList.remove('playing');
-            });
+
+// Sequencer playback
+function advanceSequencer() {
+    // Remove playing class from previous step
+    document.querySelectorAll('.step').forEach(el => {
+        el.classList.remove('playing');
+    });
             
             // Add playing class to current step
             instruments.forEach(inst => {
